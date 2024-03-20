@@ -1,0 +1,95 @@
+{
+    "configurations": {
+        "app": {
+            "adapter": "vscode-go",
+            "filetypes": [
+                "go"
+            ],
+            "configuration": {
+                "request": "launch",
+                "mode": "debug",
+                "program": "${workspaceFolder}/cmd/server",
+                "dlvFlags": ["--check-go-version=false"],
+                "cwd": "${workspaceFolder}",
+                "env": {
+                },
+                "args": [
+                    "--profile=local"
+                ],
+                "showLog": true
+            }
+        },
+        "delve": {
+            "adapter": "vscode-go",
+            "filetypes": [
+                "go"
+            ],
+            "variables": {
+                "dlvFlags": "--check-go-version=false"
+            },
+            "configuration": {
+                "name": "Test Method",
+                "type": "go",
+                "request": "launch",
+                "mode": "test",
+                "program": "${fileDirname}",
+                "cwd": "${workspaceFolder}",
+                "dlvToolPath": "$HOME/go/bin/dlv",
+                "dlvFlags": ["--check-go-version=false"],
+                "env": {},
+                "args": [
+                    "-test.v",
+                    "-test.run",
+                    "${Test}"
+                ],
+                "showLog": true
+            }
+        },
+        "file": {
+            "adapter": "vscode-go",
+            "filetypes": [
+                "go"
+            ],
+            "configuration": {
+                "name": "Test Current File",
+                "type": "go",
+                "request": "launch",
+                "mode": "test",
+                "dlvToolPath": "$HOME/go/bin/dlv",
+                "program": "${file}",
+                "cwd": "${workspaceFolder}",
+                "env": {
+                },
+                "args": [],
+                "dlvFlags": ["--check-go-version=false"],
+                "showLog": true
+            }
+        },
+        "method": {
+            "adapter": "vscode-go",
+            "filetypes": [
+                "go"
+            ],
+            "configuration": {
+                "name": "Test Method",
+                "type": "go",
+                "request": "launch",
+                "mode": "test",
+                "program": "${fileDirname}",
+                "cwd": "${workspaceFolder}",
+                "dlvToolPath": "$HOME/go/bin/dlv",
+                "env": {},
+                "args": [
+                    "-test.v",
+                    "-test.run",
+                    "${Test}"
+                ],
+                "dlvFlags": ["--check-go-version=false"],
+                "variables": {
+                    "dlvFlags": "--check-go-version=false"
+                },
+                "showLog": true
+            }
+        }
+    }
+}
