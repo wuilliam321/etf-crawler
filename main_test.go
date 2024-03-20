@@ -2643,6 +2643,7 @@ var jsonText = `{
 
 func TestParse(t *testing.T) {
 	expected := Output{
+		Ticker:   "VOO",
 		Quality:   "A 95",
 		PER:       "23.90",
 		ExpRatio:  "0.03%",

@@ -8,11 +8,40 @@ import (
 )
 
 func main() {
+	// Check if a filename is provided as command-line argument
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: go run main.go <format>")
+		return
+	}
+
+	// Get the filename from command-line arguments
+	format := os.Args[1]
+
 	data, err := os.ReadFile("output.json")
 	if err != nil {
 		log.Fatalf("Error reading file: %v", err)
 	}
-	fmt.Println(parse(string(data)))
+	out := parse(string(data))
+	if format == "calc" {
+		fmt.Printf(
+			"%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t",
+			out.Ticker,
+			out.Issuer,
+			out.Quality,
+			out.PER,
+			out.ExpRatio,
+			out.DistYield,
+			out.Yield10Y,
+			out.Yield5Y,
+			out.Yield1Y,
+			out.NHoldings,
+			out.AUM,
+			out.Top10,
+		)
+		return
+	}
+
+	fmt.Printf("%+v", out)
 }
 
 func parse(jsonText string) Output {
@@ -22,6 +51,9 @@ func parse(jsonText string) Output {
 	if err != nil {
 		log.Fatal("fail unmarshal", err.Error())
 	}
+
+	var ticker string
+	ticker = parsed.Data.Results.Ticker
 
 	var issuer string
 	tags := parsed.Data.Results.Tags
@@ -93,6 +125,7 @@ func parse(jsonText string) Output {
 	}
 
 	return Output{
+		Ticker:    ticker,
 		Quality:   quality,
 		PER:       per,
 		ExpRatio:  exp_ratio,
@@ -105,8 +138,4 @@ func parse(jsonText string) Output {
 		AUM:       aum,
 		Top10:     fmt.Sprintf("%.2f", top10*100) + "%",
 	}
-}
-
-func pointer(v interface{}) interface{} {
-	return &v
 }

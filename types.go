@@ -83,14 +83,15 @@ type Response struct {
 }
 
 type Output struct {
+	Ticker    string `json:"ticker"`
+	Issuer    string `json:"issuer"`
 	Quality   string `json:"quality"`
 	PER       string `json:"per"`
 	ExpRatio  string `json:"exp_ratio"`
-	Issuer    string `json:"issuer"`
+	DistYield string `json:"distributionYield"`
 	Yield10Y  string `json:"yield10y"`
 	Yield5Y   string `json:"yield5y"`
 	Yield1Y   string `json:"yield1y"`
-	DistYield string `json:"distributionYield"`
 	NHoldings string `json:"nholdings"`
 	AUM       string `json:"aum"`
 	Top10     string `json:"top10perc"`
