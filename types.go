@@ -31,6 +31,7 @@ type Field struct {
 	Perf10YrAnnualized *string                  `json:"perf10YrAnnualized,omitempty"`
 	Perf5YrAnnualized  *string                  `json:"perf5YrAnnualized,omitempty"`
 	Perf1Yr            *string                  `json:"perf1Yr,omitempty"`
+	PerfYtd            *string                  `json:"perfYtd,omitempty"`
 	Data               []map[string]interface{} `json:"data,omitempty"`
 	ShortLabel         string                   `json:"shortLabel"`
 	Name               string                   `json:"name"`
@@ -92,6 +93,7 @@ type Output struct {
 	Yield10Y  string `json:"yield10y"`
 	Yield5Y   string `json:"yield5y"`
 	Yield1Y   string `json:"yield1y"`
+	Ytd       string `json:"perf_td"`
 	NHoldings string `json:"nholdings"`
 	AUM       string `json:"aum"`
 	Top10     string `json:"top10perc"`

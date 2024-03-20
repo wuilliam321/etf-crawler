@@ -24,7 +24,7 @@ func main() {
 	out := parse(string(data))
 	if format == "calc" {
 		fmt.Printf(
-			"%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t",
+			"%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v",
 			out.Ticker,
 			out.Issuer,
 			out.Quality,
@@ -34,6 +34,7 @@ func main() {
 			out.Yield10Y,
 			out.Yield5Y,
 			out.Yield1Y,
+			out.Ytd,
 			out.NHoldings,
 			out.AUM,
 			out.Top10,
@@ -78,6 +79,7 @@ func parse(jsonText string) Output {
 	var yield10y string
 	var yield5y string
 	var yield1y string
+	var ytd string
 	var dist_yield string
 	var nholdings string
 	var aum string
@@ -109,6 +111,7 @@ func parse(jsonText string) Output {
 						yield10y = *f.Perf10YrAnnualized
 						yield5y = *f.Perf5YrAnnualized
 						yield1y = *f.Perf1Yr
+						ytd = *f.PerfYtd
 					}
 					if *f.Type == "securities" {
 						if f.Data != nil {
@@ -133,6 +136,7 @@ func parse(jsonText string) Output {
 		Yield10Y:  yield10y,
 		Yield5Y:   yield5y,
 		Yield1Y:   yield1y,
+		Ytd:       ytd,
 		DistYield: dist_yield,
 		NHoldings: nholdings,
 		AUM:       aum,

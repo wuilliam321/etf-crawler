@@ -2643,7 +2643,7 @@ var jsonText = `{
 
 func TestParse(t *testing.T) {
 	expected := Output{
-		Ticker:   "VOO",
+		Ticker:    "VOO",
 		Quality:   "A 95",
 		PER:       "23.90",
 		ExpRatio:  "0.03%",
@@ -2651,6 +2651,7 @@ func TestParse(t *testing.T) {
 		Yield10Y:  "12.70%",
 		Yield5Y:   "14.55%",
 		Yield1Y:   "33.53%",
+		Ytd:   "8.28%",
 		DistYield: "1.34%",
 		NHoldings: "505",
 		AUM:       "$424.79B",
