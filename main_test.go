@@ -2643,20 +2643,28 @@ var jsonText = `{
 
 func TestParse(t *testing.T) {
 	expected := Output{
-		Ticker:    "VOO",
-		Quality:   "A 95",
-		PER:       "23.90",
-		ExpRatio:  "0.03%",
-		Issuer:    "Vanguard",
-		Yield10Y:  "12.70%",
-		Yield5Y:   "14.55%",
-		Yield1Y:   "33.53%",
-		Ytd:   "8.28%",
-		DistYield: "1.34%",
-		NHoldings: "505",
-		AUM:       "$424.79B",
-		Top10:     "30.81%",
+		Ticker:            "VOO",
+		Quality:           "A 95",
+		PER:               "23.90",
+		ExpRatio:          "0.03%",
+		Issuer:            "Vanguard",
+		Yield10Y:          "12.70%",
+		Yield5Y:           "14.55%",
+		Yield1Y:           "33.53%",
+		Ytd:               "8.28%",
+		DistYield:         "1.34%",
+		NHoldings:         "505",
+		AUM:               "$424.79B",
+		Top10:             "30.81%",
+		Segment:           "Equity: U.S.  -  Large Cap",
+		TopAllocation:     "Technology Services",
+		TopAllocationPerc: "20.09%",
 	}
 	actual := parse(jsonText)
 	require.Equal(t, expected, actual)
+}
+
+func TestCaltOutput(t *testing.T) {
+	actual := output("calc", parse(jsonText))
+	require.Equal(t, "VOO\tVanguard\tA 95\t23.90\t0.03%\t1.34%\t12.70%\t14.55%\t33.53%\t8.28%\t505\t$424.79B\t30.81%\tEquity: U.S.  -  Large Cap\tTechnology Services\t20.09%", actual)
 }

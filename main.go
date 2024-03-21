@@ -22,9 +22,13 @@ func main() {
 		log.Fatalf("Error reading file: %v", err)
 	}
 	out := parse(string(data))
+	fmt.Println(output(format, out))
+}
+
+func output(format string, out Output) string {
 	if format == "calc" {
-		fmt.Printf(
-			"%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v",
+		return fmt.Sprintf(
+			"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
 			out.Ticker,
 			out.Issuer,
 			out.Quality,
@@ -38,11 +42,12 @@ func main() {
 			out.NHoldings,
 			out.AUM,
 			out.Top10,
+			out.Segment,
+			out.TopAllocation,
+			out.TopAllocationPerc,
 		)
-		return
 	}
-
-	fmt.Printf("%+v", out)
+	return fmt.Sprintf("%+v", out)
 }
 
 func parse(jsonText string) Output {
@@ -65,11 +70,15 @@ func parse(jsonText string) Output {
 	}
 
 	var quality string
+	var segment string
 	headers := parsed.Data.Results.Header.Groups
 	for _, g := range headers {
 		for _, f := range g.Fields {
 			if f.Name == "overallRatingScore" {
 				quality = f.Value.(string)
+			}
+			if f.Name == "segment" {
+				segment = f.Value.(string)
 			}
 		}
 	}
@@ -84,6 +93,8 @@ func parse(jsonText string) Output {
 	var nholdings string
 	var aum string
 	var top10 float64
+	var topAllocation string
+	var topAllocationPerc string
 	body := parsed.Data.Results.Body.Groups
 	for _, g := range body {
 		for _, sg := range g.Groups {
@@ -122,24 +133,41 @@ func parse(jsonText string) Output {
 							}
 						}
 					}
+					if *f.Type == "sectorBreakdown" {
+						if f.Data != nil {
+							d := f.Data
+							if len(d) > 0 {
+								field := d[0]
+								if v, ok := field["name"].(string); ok {
+									topAllocation = v
+								}
+								if v, ok := field["weight"].(string); ok {
+									topAllocationPerc = v
+								}
+							}
+						}
+					}
 				}
 			}
 		}
 	}
 
 	return Output{
-		Ticker:    ticker,
-		Quality:   quality,
-		PER:       per,
-		ExpRatio:  exp_ratio,
-		Issuer:    issuer,
-		Yield10Y:  yield10y,
-		Yield5Y:   yield5y,
-		Yield1Y:   yield1y,
-		Ytd:       ytd,
-		DistYield: dist_yield,
-		NHoldings: nholdings,
-		AUM:       aum,
-		Top10:     fmt.Sprintf("%.2f", top10*100) + "%",
+		Ticker:            ticker,
+		Quality:           quality,
+		PER:               per,
+		ExpRatio:          exp_ratio,
+		Issuer:            issuer,
+		Yield10Y:          yield10y,
+		Yield5Y:           yield5y,
+		Yield1Y:           yield1y,
+		Ytd:               ytd,
+		DistYield:         dist_yield,
+		NHoldings:         nholdings,
+		AUM:               aum,
+		Top10:             fmt.Sprintf("%.2f", top10*100) + "%",
+		Segment:           segment,
+		TopAllocation:     topAllocation,
+		TopAllocationPerc: topAllocationPerc,
 	}
 }
