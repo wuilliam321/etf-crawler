@@ -100,4 +100,5 @@ type Output struct {
 	Segment           string
 	TopAllocation     string
 	TopAllocationPerc string
+	IndexTracked      string
 }

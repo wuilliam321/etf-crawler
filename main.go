@@ -28,7 +28,7 @@ func main() {
 func output(format string, out Output) string {
 	if format == "calc" {
 		return fmt.Sprintf(
-			"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
+			"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
 			out.Ticker,
 			out.Issuer,
 			out.Quality,
@@ -42,6 +42,7 @@ func output(format string, out Output) string {
 			out.NHoldings,
 			out.AUM,
 			out.Top10,
+			out.IndexTracked,
 			out.Segment,
 			out.TopAllocation,
 			out.TopAllocationPerc,
@@ -95,6 +96,7 @@ func parse(jsonText string) Output {
 	var top10 float64
 	var topAllocation string
 	var topAllocationPerc string
+	var indexTracked string
 	body := parsed.Data.Results.Body.Groups
 	for _, g := range body {
 		for _, sg := range g.Groups {
@@ -115,6 +117,9 @@ func parse(jsonText string) Output {
 					}
 					if f.Name == "aum" {
 						aum = f.Value.(string)
+					}
+					if f.Name == "underlyingIndex" {
+						indexTracked = f.RawValue.(string)
 					}
 				}
 				if f.Type != nil {
@@ -169,5 +174,6 @@ func parse(jsonText string) Output {
 		Segment:           segment,
 		TopAllocation:     topAllocation,
 		TopAllocationPerc: topAllocationPerc,
+		IndexTracked:      indexTracked,
 	}
 }
