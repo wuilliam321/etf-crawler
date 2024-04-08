@@ -28,7 +28,7 @@ func main() {
 func output(format string, out Output) string {
 	if format == "calc" {
 		return fmt.Sprintf(
-			"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
+			"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
 			out.Ticker,
 			out.Issuer,
 			out.Quality,
@@ -41,6 +41,7 @@ func output(format string, out Output) string {
 			out.Ytd,
 			out.NHoldings,
 			out.AUM,
+			out.DailyDollarVolume,
 			out.Top10,
 			out.IndexTracked,
 			out.Segment,
@@ -93,6 +94,7 @@ func parse(jsonText string) Output {
 	var dist_yield string
 	var nholdings string
 	var aum string
+	var dailyDollarVolume string
 	var top10 float64
 	var topAllocation string
 	var topAllocationPerc string
@@ -117,6 +119,9 @@ func parse(jsonText string) Output {
 					}
 					if f.Name == "aum" {
 						aum = f.Value.(string)
+					}
+					if f.Name == "avgDailyDollarVolValue" {
+						dailyDollarVolume = f.Value.(string)
 					}
 					if f.Name == "underlyingIndex" {
 						indexTracked = f.RawValue.(string)
@@ -170,6 +175,7 @@ func parse(jsonText string) Output {
 		DistYield:         dist_yield,
 		NHoldings:         nholdings,
 		AUM:               aum,
+		DailyDollarVolume: dailyDollarVolume,
 		Top10:             fmt.Sprintf("%.2f", top10*100) + "%",
 		Segment:           segment,
 		TopAllocation:     topAllocation,

@@ -96,6 +96,7 @@ type Output struct {
 	Ytd               string
 	NHoldings         string
 	AUM               string
+	DailyDollarVolume string
 	Top10             string
 	Segment           string
 	TopAllocation     string

@@ -2655,6 +2655,7 @@ func TestParse(t *testing.T) {
 		DistYield:         "1.34%",
 		NHoldings:         "505",
 		AUM:               "$424.79B",
+		DailyDollarVolume: "$2.17B",
 		Top10:             "30.81%",
 		Segment:           "Equity: U.S.  -  Large Cap",
 		TopAllocation:     "Technology Services",
@@ -2667,5 +2668,5 @@ func TestParse(t *testing.T) {
 
 func TestCaltOutput(t *testing.T) {
 	actual := output("calc", parse(jsonText))
-	require.Equal(t, "VOO\tVanguard\tA 95\t23.90\t0.03%\t1.34%\t12.70%\t14.55%\t33.53%\t8.28%\t505\t$424.79B\t30.81%\tS&P 500\tEquity: U.S.  -  Large Cap\tTechnology Services\t20.09%", actual)
+	require.Equal(t, "VOO\tVanguard\tA 95\t23.90\t0.03%\t1.34%\t12.70%\t14.55%\t33.53%\t8.28%\t505\t$424.79B\t$2.17B\t30.81%\tS&P 500\tEquity: U.S.  -  Large Cap\tTechnology Services\t20.09%", actual)
 }
