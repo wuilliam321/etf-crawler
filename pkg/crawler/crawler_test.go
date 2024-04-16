@@ -1,4 +1,4 @@
-package main
+package crawler
 
 import (
 	"testing"
@@ -2667,6 +2667,6 @@ func TestParse(t *testing.T) {
 }
 
 func TestCaltOutput(t *testing.T) {
-	actual := output("calc", parse(jsonText))
+	actual := ToString("calc", jsonText)
 	require.Equal(t, "VOO\tVanguard\tA 95\t23.90\t0.03%\t1.34%\t12.70%\t14.55%\t33.53%\t8.28%\t505\t$424.79B\t$2.17B\t30.81%\tS&P 500\tEquity: U.S.  -  Large Cap\tTechnology Services\t20.09%", actual)
 }
