@@ -9,7 +9,7 @@ import (
 func ToString(format string, s string) string {
 	out := parse(s)
 	return fmt.Sprintf(
-		"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
+		"%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s",
 		out.Ticker,
 		out.Issuer,
 		out.Quality,
@@ -22,6 +22,7 @@ func ToString(format string, s string) string {
 		out.Ytd,
 		out.NHoldings,
 		out.AUM,
+		out.WeightedAvgMarketCap,
 		out.DailyDollarVolume,
 		out.Top10,
 		out.IndexTracked,
@@ -39,8 +40,7 @@ func parse(jsonText string) Output {
 		log.Fatal("fail unmarshal", err.Error())
 	}
 
-	var ticker string
-	ticker = parsed.Data.Results.Ticker
+	ticker := parsed.Data.Results.Ticker
 
 	var issuer string
 	tags := parsed.Data.Results.Tags
@@ -73,6 +73,7 @@ func parse(jsonText string) Output {
 	var dist_yield string
 	var nholdings string
 	var aum string
+	var weightedAvgMarketCap string
 	var dailyDollarVolume string
 	var top10 float64
 	var topAllocation string
@@ -101,6 +102,9 @@ func parse(jsonText string) Output {
 					}
 					if f.Name == "avgDailyDollarVolValue" {
 						dailyDollarVolume = f.Value.(string)
+					}
+					if f.Name == "weightedAvgMarketCap" {
+						weightedAvgMarketCap = f.Value.(string)
 					}
 					if f.Name == "underlyingIndex" {
 						indexTracked = f.RawValue.(string)
@@ -142,23 +146,24 @@ func parse(jsonText string) Output {
 	}
 
 	return Output{
-		Ticker:            ticker,
-		Quality:           quality,
-		PER:               per,
-		ExpRatio:          exp_ratio,
-		Issuer:            issuer,
-		Yield10Y:          yield10y,
-		Yield5Y:           yield5y,
-		Yield1Y:           yield1y,
-		Ytd:               ytd,
-		DistYield:         dist_yield,
-		NHoldings:         nholdings,
-		AUM:               aum,
-		DailyDollarVolume: dailyDollarVolume,
-		Top10:             fmt.Sprintf("%.2f", top10*100) + "%",
-		Segment:           segment,
-		TopAllocation:     topAllocation,
-		TopAllocationPerc: topAllocationPerc,
-		IndexTracked:      indexTracked,
+		Ticker:               ticker,
+		Quality:              quality,
+		PER:                  per,
+		ExpRatio:             exp_ratio,
+		Issuer:               issuer,
+		Yield10Y:             yield10y,
+		Yield5Y:              yield5y,
+		Yield1Y:              yield1y,
+		Ytd:                  ytd,
+		DistYield:            dist_yield,
+		NHoldings:            nholdings,
+		AUM:                  aum,
+		WeightedAvgMarketCap: weightedAvgMarketCap,
+		DailyDollarVolume:    dailyDollarVolume,
+		Top10:                fmt.Sprintf("%.2f", top10*100) + "%",
+		Segment:              segment,
+		TopAllocation:        topAllocation,
+		TopAllocationPerc:    topAllocationPerc,
+		IndexTracked:         indexTracked,
 	}
 }

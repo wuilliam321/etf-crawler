@@ -1,9 +1,10 @@
-package crawler
+package crawler_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
+	"github.com/wuilliam321/etf-crawler/pkg/crawler"
 )
 
 var jsonText = `{
@@ -2641,32 +2642,7 @@ var jsonText = `{
     }
 }`
 
-func TestParse(t *testing.T) {
-	expected := Output{
-		Ticker:            "VOO",
-		Quality:           "A 95",
-		PER:               "23.90",
-		ExpRatio:          "0.03%",
-		Issuer:            "Vanguard",
-		Yield10Y:          "12.70%",
-		Yield5Y:           "14.55%",
-		Yield1Y:           "33.53%",
-		Ytd:               "8.28%",
-		DistYield:         "1.34%",
-		NHoldings:         "505",
-		AUM:               "$424.79B",
-		DailyDollarVolume: "$2.17B",
-		Top10:             "30.81%",
-		Segment:           "Equity: U.S.  -  Large Cap",
-		TopAllocation:     "Technology Services",
-		TopAllocationPerc: "20.09%",
-		IndexTracked:      "S&P 500",
-	}
-	actual := parse(jsonText)
-	require.Equal(t, expected, actual)
-}
-
 func TestCaltOutput(t *testing.T) {
-	actual := ToString("calc", jsonText)
-	require.Equal(t, "VOO\tVanguard\tA 95\t23.90\t0.03%\t1.34%\t12.70%\t14.55%\t33.53%\t8.28%\t505\t$424.79B\t$2.17B\t30.81%\tS&P 500\tEquity: U.S.  -  Large Cap\tTechnology Services\t20.09%", actual)
+	actual := crawler.ToString("calc", jsonText)
+	require.Equal(t, "VOO\tVanguard\tA 95\t23.90\t0.03%\t1.34%\t12.70%\t14.55%\t33.53%\t8.28%\t505\t$424.79B\t$742.84B\t$2.17B\t30.81%\tS&P 500\tEquity: U.S.  -  Large Cap\tTechnology Services\t20.09%", actual)
 }

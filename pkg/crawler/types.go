@@ -84,22 +84,23 @@ type Response struct {
 }
 
 type Output struct {
-	Ticker            string
-	Issuer            string
-	Quality           string
-	PER               string
-	ExpRatio          string
-	DistYield         string
-	Yield10Y          string
-	Yield5Y           string
-	Yield1Y           string
-	Ytd               string
-	NHoldings         string
-	AUM               string
-	DailyDollarVolume string
-	Top10             string
-	IndexTracked      string
-	Segment           string
-	TopAllocation     string
-	TopAllocationPerc string
+	Ticker               string
+	Issuer               string
+	Quality              string
+	PER                  string
+	ExpRatio             string
+	DistYield            string
+	Yield10Y             string
+	Yield5Y              string
+	Yield1Y              string
+	Ytd                  string
+	NHoldings            string
+	AUM                  string
+	WeightedAvgMarketCap string
+	DailyDollarVolume    string
+	Top10                string
+	IndexTracked         string
+	Segment              string
+	TopAllocation        string
+	TopAllocationPerc    string
 }
